@@ -1,0 +1,27 @@
+spring:
+    datasource:
+        db1:
+            jdbc-url: jdbc:hsqldb:mem:/test1/db1 #Memory
+            #url: jdbc:hsqldb:file:~/.hsqldb-db1/test-db1 #File
+            username: sa
+            password: sa
+            #driver-class-name: org.hsqldb.jdbcDriver
+            type: com.zaxxer.hikari.HikariDataSource
+            hikari:
+                minimum-idle: 0
+                maximum-pool-size: 10
+        db2:
+            url: jdbc:hsqldb:mem:/test2/db2 #Memory
+            #url: jdbc:hsqldb:file:~/.hsqldb-db2/test-db2 #File
+            username: sa
+            password: sa
+            #driver-class-name: org.hsqldb.jdbcDriver
+            type: org.apache.commons.dbcp2.BasicDataSource #The default pool is 'hikari', but if you use others you should import it by maven(after 2.0).
+            dbcp2:
+                initial-size: 0
+                max-active: 10
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: create-drop #create, create-drop, update
+            dialect: org.hibernate.dialect.HSQLDialect
