@@ -39,7 +39,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/css/**", "/index").permitAll()
-                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/user/**").hasRole("ADMIN") // Admin
+                .antMatchers("/user/A1").hasRole("A1") // 大型客车
+                .antMatchers("/user/A2").hasRole("A2") // 牵引车
+                .antMatchers("/user/A3").hasAnyRole("A1", "A3") // 城市公交车
+                .antMatchers("/user/B1").hasAnyRole("A1", "A2", "B1") // 中型客车
+                .antMatchers("/user/B2").hasAnyRole("A1", "A2", "B2") // 大型货车
+                .antMatchers("/user/C1").hasAnyRole("A1", "A2", "A3", "B1", "B2", "C1") // 小型汽车
+                .antMatchers("/user/C2").hasAnyRole("A1", "A2", "A3", "B1", "B2", "C1", "C2") // 小型自动挡汽车
+                .antMatchers("/user/C3").hasAnyRole("A1", "A2", "A3", "B1", "B2", "C1", "C3") // 低速载货汽车
+                .antMatchers("/user/C4").hasAnyRole("A1", "A2", "A3", "B1", "B2", "C1", "C3", "C4") // 三轮车
                 .and()
                 .formLogin().loginPage("/login").failureUrl("/login-error");
     }
@@ -52,12 +61,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // https://stackoverflow.com/questions/19525380/difference-between-role-and-grantedauthority-in-spring-security
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("user1")
-                .password("{bcrypt}" + encoder.encode("user1"))
+        // ADMIN
+        manager.createUser(User.withUsername("admin").password("{bcrypt}" + encoder.encode("admin"))
                 .roles("ADMIN").build());
-        manager.createUser(User.withUsername("user2")
-                .password("{bcrypt}" + encoder.encode("user2"))
-                .roles("USER").build());
+        // A1
+        manager.createUser(User.withUsername("a1").password("{bcrypt}" + encoder.encode("a1"))
+                .roles("A1").build());
+        // A2
+        manager.createUser(User.withUsername("a2").password("{bcrypt}" + encoder.encode("a2"))
+                .roles("A2").build());
+        // A3
+        manager.createUser(User.withUsername("a3").password("{bcrypt}" + encoder.encode("a3"))
+                .roles("A3").build());
+        // B1
+        manager.createUser(User.withUsername("b1").password("{bcrypt}" + encoder.encode("b1"))
+                .roles("B1").build());
+        // B2
+        manager.createUser(User.withUsername("b2").password("{bcrypt}" + encoder.encode("b2"))
+                .roles("B2").build());
+        // C1
+        manager.createUser(User.withUsername("c1").password("{bcrypt}" + encoder.encode("c1"))
+                .roles("C1").build());
+        // C2
+        manager.createUser(User.withUsername("c2").password("{bcrypt}" + encoder.encode("c2"))
+                .roles("C2").build());
+        // C3
+        manager.createUser(User.withUsername("c3").password("{bcrypt}" + encoder.encode("c3"))
+                .roles("C3").build());
+        // C4
+        manager.createUser(User.withUsername("c4").password("{bcrypt}" + encoder.encode("c4"))
+                .roles("C4").build());
 
         return manager;
     }
