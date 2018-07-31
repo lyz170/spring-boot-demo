@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login page</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/common.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+
+    <!-- Header begin -->
+    <div class="page-header bg-info">
+        <div class="row">
+            <div class="col-md-8">
+                <h3 class="text-info">&nbsp;Welcome to Driving License Page!&nbsp;<small>准驾车型分类</small>
+                </h3>
+            </div>
+
+            <!-- Is authenticated start -->
+            <div th:fragment="logout" class="col-md-4 logout" sec:authorize="isAuthenticated()">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="text-info mt-10 mb-5">Logged in user: <span sec:authentication="name"></span></p>
+                        <p class="text-info mb-5">Roles: <span sec:authentication="principal.authorities"></span></p>
+                    </div>
+                    <div class="col-md-4">
+                        <form action="#" th:action="@{/logout}" method="post">
+                            <button type="submit" class="btn btn-primary btn-sm mt-20">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Is authenticated end -->
+
+            <!-- Is not authenticated start -->
+            <div class="col-md-4" sec:authorize="not isAuthenticated()">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="text-info mt-25">You have not logged in.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/login" th:href="@{/login}" class="btn btn-primary btn-sm active mt-20" role="button">Log In</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Is not authenticated end -->
+
+        </div>
+    </div>
+    <!-- Header end -->
+
+    <!-- content begin -->
+    <div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr class="info">
+                <th>编号</th>
+                <th>准驾车型</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr sec:authorize="hasRole('A1')" class="success">
+                <td><a href="/a1/index" th:href="@{/a1/index}">A1</a></td>
+                <td>大型客车, A3, B1, B2</td>
+            </tr>
+            <tr sec:authorize="not hasRole('A1')">
+                <td><a href="/a1/index" th:href="@{/a1/index}">A1</a></td>
+                <td>大型客车, A3, B1, B2</td>
+            </tr>
+            <tr sec:authorize="hasRole('A2')" class="success">
+                <td><a href="/a2/index" th:href="@{/a2/index}">A2</a></td>
+                <td>牵引车, B1, B2</td>
+            </tr>
+            <tr sec:authorize="not hasRole('A2')">
+                <td><a href="/a2/index" th:href="@{/a2/index}">A2</a></td>
+                <td>牵引车, B1, B2</td>
+            </tr>
+            <tr sec:authorize="hasAnyRole('A1', 'A3')" class="success">
+                <td><a href="/a3/index" th:href="@{/a3/index}">A3</a></td>
+                <td>城市工交车, C1</td>
+            </tr>
+            <tr sec:authorize="not hasAnyRole('A1', 'A3')">
+                <td><a href="/a3/index" th:href="@{/a3/index}">A3</a></td>
+                <td>城市工交车, C1</td>
+            </tr>
+            <tr sec:authorize="hasAnyRole('A1', 'A2', 'B1')" class="success">
+                <td><a href="/b1/index" th:href="@{/b1/index}">B1</a></td>
+                <td>中型客车, C1</td>
+            </tr>
+            <tr sec:authorize="not hasAnyRole('A1', 'A2', 'B1')">
+                <td><a href="/b1/index" th:href="@{/b1/index}">B1</a></td>
+                <td>中型客车, C1</td>
+            </tr>
+            <tr sec:authorize="hasAnyRole('A1', 'A2', 'B2')" class="success">
+                <td><a href="/b2/index" th:href="@{/b2/index}">B2</a></td>
+                <td>大型货车, C1</td>
+            </tr>
+            <tr sec:authorize="not hasAnyRole('A1', 'A2', 'B2')">
+                <td><a href="/b2/index" th:href="@{/b2/index}">B2</a></td>
+                <td>大型货车, C1</td>
+            </tr>
+            <tr sec:authorize="hasAnyRole('A1', 'A2', 'A3', 'B1', 'B2', 'C1')" class="success">
+                <td><a href="/c1/index" th:href="@{/c1/index}">C1</a></td>
+                <td>小型汽车, C2, C3</td>
+            </tr>
+            <tr sec:authorize="not hasAnyRole('A1', 'A2', 'A3', 'B1', 'B2', 'C1')">
+                <td><a href="/c1/index" th:href="@{/c1/index}">C1</a></td>
+                <td>小型汽车, C2, C3</td>
+            </tr>
+            <tr sec:authorize="hasAnyRole('A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C2')" class="success">
+                <td><a href="/c2/index" th:href="@{/c2/index}">C2</a></td>
+                <td>小型自动档汽车</td>
+            </tr>
+            <tr sec:authorize="not hasAnyRole('A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C2')">
+                <td><a href="/c2/index" th:href="@{/c2/index}">C2</a></td>
+                <td>小型自动档汽车</td>
+            </tr>
+            <tr sec:authorize="hasAnyRole('A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C3')" class="success">
+                <td><a href="/c3/index" th:href="@{/c3/index}">C3</a></td>
+                <td>低速载货汽车, C4</td>
+            </tr>
+            <tr sec:authorize="not hasAnyRole('A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C3')">
+                <td><a href="/c3/index" th:href="@{/c3/index}">C3</a></td>
+                <td>低速载货汽车, C4</td>
+            </tr>
+            <tr sec:authorize="hasAnyRole('A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C3', 'C4')" class="success">
+                <td><a href="/c4/index" th:href="@{/c4/index}">C4</a></td>
+                <td>三轮车</td>
+            </tr>
+            <tr sec:authorize="not hasAnyRole('A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C3', 'C4')">
+                <td><a href="/c4/index" th:href="@{/c4/index}">C4</a></td>
+                <td>三轮车</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- content end -->
+</div>
+
+<!-- jQuery -->
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<!-- Bootstrap(jQuery required) -->
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

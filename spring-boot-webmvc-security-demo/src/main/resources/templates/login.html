@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags: must set to top 3 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login page</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/common.css}" rel="stylesheet">
+    <link th:href="@{/login.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <form id="login-form" class="form-signin" th:action="@{/login}" method="post">
+        <h3 class="form-signin-heading text-primary"><b>Login page</b></h3>
+        <p th:if="${loginError}" class="bg-danger">Wrong user or password</p>
+        <input id="username" type="text" name="username" class="form-control" autofocus="autofocus"
+               placeholder="username" maxlength="16">
+        <input id="password" type="password" name="password" class="form-control" placeholder="password"
+               maxlength="16"/>
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Log in</button>
+        <p class="mt-5"><a href="/index" th:href="@{/index}">Back to home page</a></p>
+    </form>
+</div>
+<!-- jQuery -->
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<!-- Bootstrap(jQuery required) -->
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

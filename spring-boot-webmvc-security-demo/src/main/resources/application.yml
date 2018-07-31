@@ -1,0 +1,14 @@
+logging:
+  level: # config root-level and package-level logs
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+  file: C:\\test\\demo.log
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update #create, create-drop, update
+  thymeleaf:
+    cache: false # set false on develop
